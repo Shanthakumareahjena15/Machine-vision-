@@ -77,35 +77,7 @@ class kFold(data_preparation):
         
         return label_index_1, label_index_2, label_index_3
     
-    def label(self, labels, index_1, index_2, index_3):
-        self.labels = labels
-        self.index_1 = index_1
-        self.index_2 = index_2
-        self.index_3 = index_3
-        label_index_1 = []
-        label_index_2 = []
-        label_index_3 = []
-        for i in index_1:
-            label_index_1.append(labels[i])
-        for i in index_2:
-            label_index_2.append(labels[i])
-        for i in index_3:
-            label_index_3.append(labels[i])
-            
-       # label_index_1 = pd.DataFrame(label_index_1) 
-       # label_index_1.to_csv( 'train_label_id_1.csv', index = False)
-       # label_index_2 = pd.DataFrame(label_index_2)
-       # label_index_2.to_csv('train_label_id_2.csv', index = False)
-       # label_index_3 =pd.DataFrame(label_index_3)
-       # label_index_3.to_csv('train_label_id_3.csv', index = False)
         
-        return label_index_1, label_index_2, label_index_3
-        
-
-
-
-
-
 
 class lable:
      def label(self, labels, index_1, index_2, index_3):
@@ -149,10 +121,7 @@ testing_feature_1, testing_feature_2, testing_feature_3 = obj_1.data_seperation(
 train_label_id1, train_label_id2, train_label_id3 = obj_1.label_id(labels_to_ids, train_index_1, train_index_2, train_index_3)
 test_label_id1, test_label_id1, test_label_id1 = obj_1.label_id(labels_to_ids, test_index_1, test_index_2, test_index_3)
 
-train_label_1, train_label_2, train_label_3 = obj_1.label(training_label, train_index_1, train_index_2, train_index_3)
-test_label_1, test_label_2, test_label_3 = obj_1.lable(training_label, test_index_1, test_index_2, test_index_3)
 
-
-
-obj_2= lable()
+label_creation= lable()
 train_label_1, train_label_2, train_label_3 = obj_2.label(training_label, train_index_1, train_index_2, train_index_3)
+test_label_1, test_label_2, test_label_3 = obj_2.label(training_label, test_index_1, test_index_2, test_index_3)

@@ -1,157 +1,158 @@
 import pandas as pd
 from sklearn.model_selection import StratifiedKFold
 import numpy as np
+from length_measurement import data_preparation
+
 
 skf = StratifiedKFold(n_splits=3,  random_state=None, shuffle=True)
-skf.get_n_splits(train_data_array, train_label_ids)
-
-train_features_pandas = pd.read_csv('training_data.csv')
-test_features_pandas = pd.read_csv('testing_data.csv')
-train_labels = pd.read_csv('train_label.csv')
-test_labels = pd.read_csv('test_label.csv')
 
 
-class k_fold:
-  def_init__(self):
-    pass
-  def index_split(train_features_pandas, train_label_ids):
-    i = 0
-     for train_index, test_index in skf.split(train_features_pandas, train_label_ids):
-        if i == 0:
-            train_index_1 = train_index 
-            test_index_1 = test_index
-        elif i == 1:
-            train_index_2 = train_index 
-            test_index_2 = test_index
-        elif i == 2:
-            train_index_3 = train_index
-            test_index_3 = test_index
+
+class kFold(data_preparation):
+    def __init__(self, base_dir, image_dir, layer_name, feature_name, label_name):
+        super().__init__(base_dir, image_dir, layer_name, feature_name, label_name)
         
-        i += 1
-     return train_index_1, test_index_1, train_index_2, test_index_2, train_index_3, test_index_3
-  
-  def k_fold_data_seperation(train_index_1, train_index_2, train_index_3):        
-    train_data_one = []
-    train_data_two = []
-    train_data_three = []
-    for i in train_index_1:
-        train_data_one.append(train_data_array[i])
-    for i in train_index_2:
-        train_data_two.append(train_data_array[i])
-    for i in train_index_3:
-        train_data_three.append(train_data_array[i])
-    train_data_one_array = np.array(train_data_one)
-    train_data_two_array = np.array(train_data_two)
-    train_data_three_array = np.array(train_data_three)
+   
+    def index_sorting(self, features, label_ids):
+        self.features = features
+        self.label_ids = label_ids
+        i = 0
+        for train_index, test_index in skf.split(features, label_ids):
+            if i == 0:
+                train_index_1 = train_index 
+                test_index_1 = test_index
+            elif i == 1:
+                train_index_2 = train_index 
+                test_index_2 = test_index
+            elif i == 2:
+                train_index_3 = train_index
+                test_index_3 = test_index
+        
+            i += 1
+        return train_index_1, test_index_1, train_index_2, test_index_2, train_index_3, test_index_3
     
-    return train_data_one_array, train_data_two_array, train_data_three_array
-  
-  
-  def k_fold_data_seperation(test_index_1, test_index_2, test_index_3):        
-    test_data_one = []
-    test_data_two = []
-    test_data_three = []
-    for i in test_index_1:
-        test_data_one.append(train_data_array[i])
-    for i in test_index_2:
-        test_data_two.append(train_data_array[i])
-    for i in test_index_3:
-        test_data_three.append(train_data_array[i])
-    test_data_one_array = np.array(test_data_one)
-    test_data_two_array = np.array(test_data_two)
-    test_data_three_array = np.array(test_data_three)
+    def data_seperation(self, index_1, index_2, index_3, feature):  
+        self.feature = feature
+        self.index_1 = index_1
+        self.index_2 = index_2
+        self.index_3 = index_3
+        data_one = []
+        data_two = []
+        data_three = []
+        
+        for i in index_1:
+            data_one.append(feature[i])
+        for i in index_2:
+            data_two.append(feature[i])
+        for i in index_3:
+            data_three.append(feature[i])
+            
+        feature_1 = np.array(data_one)
+        feature_2 = np.array(data_two)
+        feature_3 = np.array(data_three)
     
-    return test_data_one_array, test_data_two_array, test_data_three_array
-
-
-  def train_label_index(train_label_ids):
-    train_label_index_1 = []
-    train_label_index_2 = []
-    train_label_index_3 = []
-    for i in train_index_1:
-        train_label_index_1.append(train_label_ids[i])
-    for i in train_index_2:
-        train_label_index_2.append(train_label_ids[i])
-    for i in train_index_3:
-        train_label_index_3.append(train_label_ids[i])
-    train_label_index_1 = pd.DataFrame(train_label_index_1) 
-    train_label_index_1.to_csv( 'train_label_id_1.csv', index = False)
-    train_label_index_2 = pd.DataFrame(train_label_index_2)
-    train_label_index_2.to_csv('train_label_id_2.csv', index = False)
-    train_label_index_3 =pd.DataFrame(train_label_index_3)
-    train_label_index_3.to_csv('train_label_id_3.csv', index = False)
+        return feature_1, feature_2, feature_3
     
-    return train_label_index_1, train_label_index_2, train_label_index_3
-
-
-
-def train_label_k(train_label):
-    train_label_1 = []
-    train_label_2 = []
-    train_label_3 = []
-    for i in train_index_1:
-        train_label_1.append(train_label[i])
-    for i in train_index_2:
-        train_label_2.append(train_label[i])
-    for i in train_index_3:
-        train_label_3.append(train_label[i])
-    train_label_index_1 = pd.DataFrame(train_label_1) 
-    train_label_index_1.to_csv( 'train_label_1.csv', index = False)
-    train_label_index_2 = pd.DataFrame(train_label_2)
-    train_label_index_2.to_csv('train_label_2.csv', index = False)
-    train_label_index_3 =pd.DataFrame(train_label_3)
-    train_label_index_3.to_csv('train_label_3.csv', index = False)
+    def label_id(self, label_ids, index_1, index_2, index_3):
+        self.label_ids = label_ids
+        self.index_1 = index_1
+        self.index_2 = index_2
+        self.index_3 = index_3
+        label_index_1 = []
+        label_index_2 = []
+        label_index_3 = []
+        for i in index_1:
+            label_index_1.append(label_ids[i])
+        for i in index_2:
+            label_index_2.append(label_ids[i])
+        for i in index_3:
+            label_index_3.append(label_ids[i])
+            
+       # label_index_1 = pd.DataFrame(label_index_1) 
+       # label_index_1.to_csv( 'train_label_id_1.csv', index = False)
+       # label_index_2 = pd.DataFrame(label_index_2)
+       # label_index_2.to_csv('train_label_id_2.csv', index = False)
+       # label_index_3 =pd.DataFrame(label_index_3)
+       # label_index_3.to_csv('train_label_id_3.csv', index = False)
+        
+        return label_index_1, label_index_2, label_index_3
     
-    return pd.DataFrame(train_label_1), pd.DataFrame(train_label_2), pd.DataFrame(train_label_3)
-
-train_label_1, train_label_2, train_label_3 = train_label_k(train_label= train_label)
-
-
-
-def test_label_index(train_label_ids):
-    test_label_index_1 = []
-    test_label_index_2 = []
-    test_label_index_3 = []
-    for i in test_index_1:
-        test_label_index_1.append(train_label_ids[i])
-    for i in test_index_2:
-        test_label_index_2.append(train_label_ids[i])
-    for i in test_index_3:
-        test_label_index_3.append(train_label_ids[i])
-    test_label_index_1 = pd.DataFrame(test_label_index_1) 
-    test_label_index_1.to_csv( 'test_label_id_1.csv', index = False)
-    test_label_index_2 = pd.DataFrame(test_label_index_2)
-    test_label_index_2.to_csv('test_label_id_2.csv', index = False)
-    test_label_index_3 =pd.DataFrame(test_label_index_3)
-    test_label_index_3.to_csv('test_label_id_3.csv', index = False)
-    return test_label_index_1, test_label_index_2, test_label_index_3
-
-
-test_label_index_k1, test_label_index_k2, test_label_index_k3 = test_label_index(train_label_ids)
+    def label(self, labels, index_1, index_2, index_3):
+        self.labels = labels
+        self.index_1 = index_1
+        self.index_2 = index_2
+        self.index_3 = index_3
+        label_index_1 = []
+        label_index_2 = []
+        label_index_3 = []
+        for i in index_1:
+            label_index_1.append(labels[i])
+        for i in index_2:
+            label_index_2.append(labels[i])
+        for i in index_3:
+            label_index_3.append(labels[i])
+            
+       # label_index_1 = pd.DataFrame(label_index_1) 
+       # label_index_1.to_csv( 'train_label_id_1.csv', index = False)
+       # label_index_2 = pd.DataFrame(label_index_2)
+       # label_index_2.to_csv('train_label_id_2.csv', index = False)
+       # label_index_3 =pd.DataFrame(label_index_3)
+       # label_index_3.to_csv('train_label_id_3.csv', index = False)
+        
+        return label_index_1, label_index_2, label_index_3
+        
 
 
 
 
-def test_label_k(train_label):
-    test_label_1 = []
-    test_label_2 = []
-    test_label_3 = []
-    for i in test_index_1:
-        test_label_1.append(train_label[i])
-    for i in test_index_2:
-        test_label_2.append(train_label[i])
-    for i in test_index_3:
-        test_label_3.append(train_label[i])
-    train_label_index_1 = pd.DataFrame(test_label_1) 
-    train_label_index_1.to_csv( 'test_label_1.csv', index = False)
-    train_label_index_2 = pd.DataFrame(test_label_2)
-    train_label_index_2.to_csv('test_label_2.csv', index = False)
-    train_label_index_3 =pd.DataFrame(test_label_3)
-    train_label_index_3.to_csv('test_label_3.csv', index = False)
-    
-    return pd.DataFrame(test_label_1), pd.DataFrame(test_label_2), pd.DataFrame(test_label_3)
-
-test_label_1, test_label_2, test_label_3 = test_label_k(train_label= train_label)
 
 
+class lable:
+     def label(self, labels, index_1, index_2, index_3):
+        self.labels = labels
+        self.index_1 = index_1
+        self.index_2 = index_2
+        self.index_3 = index_3
+        label_index_1 = []
+        label_index_2 = []
+        label_index_3 = []
+        for i in index_1:
+            label_index_1.append(labels[i])
+        for i in index_2:
+            label_index_2.append(labels[i])
+        for i in index_3:
+            label_index_3.append(labels[i])
+            
+       # label_index_1 = pd.DataFrame(label_index_1) 
+       # label_index_1.to_csv( 'train_label_id_1.csv', index = False)
+       # label_index_2 = pd.DataFrame(label_index_2)
+       # label_index_2.to_csv('train_label_id_2.csv', index = False)
+       # label_index_3 =pd.DataFrame(label_index_3)
+       # label_index_3.to_csv('train_label_id_3.csv', index = False)
+        
+        return label_index_1, label_index_2, label_index_3
 
+
+
+
+
+
+obj_1= kFold( 'D:\Randomforest', '/Validation-Example1/*', 'block5_pool', 'tarining.csv',  'training_label.csv')
+training_image, training_label  = obj_1.image_to_array()
+training_feature = obj_1.VGG16_trained_model(training_image.shape[0])
+labels_to_ids, ids_to_labels = obj_1.creat_label(training_label)
+train_index_1, test_index_1, train_index_2, test_index_2, train_index_3, test_index_3 = obj_1.index_sorting(training_feature, labels_to_ids)
+
+training_feature_1, training_feature_2, training_feature_3 = obj_1.data_seperation(train_index_1, train_index_2, train_index_3, training_feature)
+testing_feature_1, testing_feature_2, testing_feature_3 = obj_1.data_seperation(test_index_1, test_index_2, test_index_3, training_feature)
+
+train_label_id1, train_label_id2, train_label_id3 = obj_1.label_id(labels_to_ids, train_index_1, train_index_2, train_index_3)
+test_label_id1, test_label_id1, test_label_id1 = obj_1.label_id(labels_to_ids, test_index_1, test_index_2, test_index_3)
+
+train_label_1, train_label_2, train_label_3 = obj_1.label(training_label, train_index_1, train_index_2, train_index_3)
+test_label_1, test_label_2, test_label_3 = obj_1.lable(training_label, test_index_1, test_index_2, test_index_3)
+
+
+
+obj_2= lable()
+train_label_1, train_label_2, train_label_3 = obj_2.label(training_label, train_index_1, train_index_2, train_index_3)

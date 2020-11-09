@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import StratifiedKFold
 import numpy as np
-from length_measurement import data_preparation
+from data_preparation import data_preparation
 
 
 skf = StratifiedKFold(n_splits=3,  random_state=None, shuffle=True)
@@ -125,3 +125,32 @@ test_label_id1, test_label_id1, test_label_id1 = obj_1.label_id(labels_to_ids, t
 label_creation= lable()
 train_label_1, train_label_2, train_label_3 = obj_2.label(training_label, train_index_1, train_index_2, train_index_3)
 test_label_1, test_label_2, test_label_3 = obj_2.label(training_label, test_index_1, test_index_2, test_index_3)
+
+
+
+
+pd.DataFrame(training_feature).to_csv('Training_feature.csv', index= False)
+pd.DataFrame(training_feature_1).to_csv('training_feature_1.csv', index= False)
+pd.DataFrame(training_feature_2).to_csv('training_feature_2.csv', index= False)
+pd.DataFrame(training_feature_3).to_csv('training_feature_3.csv', index= False)
+
+pd.DataFrame(testing_feature_1).to_csv('testing_feature_1.csv', index= False)
+pd.DataFrame(testing_feature_2).to_csv('testing_feature_2.csv', index= False)
+pd.DataFrame(testing_feature_3).to_csv('testing_feature_3.csv', index= False)
+
+
+pd.DataFrame(train_label_1).to_csv('train_label_1.csv', index= False)
+pd.DataFrame(train_label_2).to_csv('train_label_2.csv', index= False)
+pd.DataFrame(train_label_3).to_csv('train_label_3.csv', index= False)
+
+pd.DataFrame(train_label_id1).to_csv('train_label_id1.csv', index= False)
+pd.DataFrame(train_label_id2).to_csv('train_label_id2.csv', index= False)
+pd.DataFrame(train_label_id3).to_csv('train_label_id3.csv', index= False)
+
+pd.DataFrame(test_label_1).to_csv('test_label_1.csv', index= False)
+pd.DataFrame(test_label_2).to_csv('test_label_2.csv', index= False)
+pd.DataFrame(test_label_3).to_csv('test_label_3.csv', index= False)
+
+pd.DataFrame(test_label_id1).to_csv('test_label_id1.csv', index= False)
+pd.DataFrame(test_label_id2).to_csv('test_label_id2.csv', index= False)
+pd.DataFrame(test_label_id3).to_csv('test_label_id3.csv', index= False)

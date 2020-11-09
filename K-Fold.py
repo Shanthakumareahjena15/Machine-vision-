@@ -127,7 +127,7 @@ train_label_1, train_label_2, train_label_3 = obj_2.label(training_label, train_
 test_label_1, test_label_2, test_label_3 = obj_2.label(training_label, test_index_1, test_index_2, test_index_3)
 
 
-
+pd.DataFrame(training_label).to_csv('training_label.csv', index= False)
 
 pd.DataFrame(training_feature).to_csv('Training_feature.csv', index= False)
 pd.DataFrame(training_feature_1).to_csv('training_feature_1.csv', index= False)

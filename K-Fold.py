@@ -113,8 +113,8 @@ test_label_1, test_label_2, test_label_3 = label_creation.label(training_label, 
 
 
 pd.DataFrame(training_label).to_csv('training_label.csv', index= False)
-
 pd.DataFrame(training_feature).to_csv('Training_feature.csv', index= False)
+
 pd.DataFrame(training_feature_1).to_csv('training_feature_1.csv', index= False)
 pd.DataFrame(training_feature_2).to_csv('training_feature_2.csv', index= False)
 pd.DataFrame(training_feature_3).to_csv('training_feature_3.csv', index= False)
@@ -132,6 +132,10 @@ pd.DataFrame(train_label_id1).to_csv('train_label_id1.csv', index= False)
 pd.DataFrame(train_label_id2).to_csv('train_label_id2.csv', index= False)
 pd.DataFrame(train_label_id3).to_csv('train_label_id3.csv', index= False)
 
+pd.DataFrame(train_index_1).to_csv('train_index1.csv', index= False)
+pd.DataFrame(train_index_2).to_csv('train_index2.csv', index= False)
+pd.DataFrame(train_index_3).to_csv('train_index3.csv', index= False)
+
 pd.DataFrame(test_label_1).to_csv('test_label_1.csv', index= False)
 pd.DataFrame(test_label_2).to_csv('test_label_2.csv', index= False)
 pd.DataFrame(test_label_3).to_csv('test_label_3.csv', index= False)
@@ -139,3 +143,22 @@ pd.DataFrame(test_label_3).to_csv('test_label_3.csv', index= False)
 pd.DataFrame(test_label_id1).to_csv('test_label_id1.csv', index= False)
 pd.DataFrame(test_label_id2).to_csv('test_label_id2.csv', index= False)
 pd.DataFrame(test_label_id3).to_csv('test_label_id3.csv', index= False)
+
+testIndex_1 = pd.read_csv('test_index1.csv')
+testIndex_2 = pd.read_csv('test_index2.csv')
+testIndex_3 = pd.read_csv('test_index3.csv')
+
+pd.DataFrame(test_index_1).to_csv('test_index1.csv', index= False)
+pd.DataFrame(test_index_2).to_csv('test_index2.csv', index= False)
+pd.DataFrame(test_index_3).to_csv('test_index3.csv', index= False)
+
+
+
+
+
+
+
+
+
+
+

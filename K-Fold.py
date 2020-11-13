@@ -89,11 +89,6 @@ class lable:
         
         return label_index_1, label_index_2, label_index_3
 
-
-
-
-
-
 obj_1= kFold( 'D:\Randomforest', '/Validation-Example1/*', 'block5_pool', 'tarining.csv',  'training_label.csv')
 training_image, training_label  = obj_1.image_to_array()
 training_feature = obj_1.VGG16_trained_model(training_image.shape[0])
@@ -151,14 +146,3 @@ testIndex_3 = pd.read_csv('test_index3.csv')
 pd.DataFrame(test_index_1).to_csv('test_index1.csv', index= False)
 pd.DataFrame(test_index_2).to_csv('test_index2.csv', index= False)
 pd.DataFrame(test_index_3).to_csv('test_index3.csv', index= False)
-
-
-
-
-
-
-
-
-
-
-

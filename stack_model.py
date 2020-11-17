@@ -8,7 +8,7 @@ import xgboost
 from xgboost import XGBClassifier
 import pickle 
 
-train_features_pandas = pd.read_csv('Training_feature.csv')
+train_features = pd.read_csv('training_feature.csv')
 train_labels = pd.read_csv('training_label.csv')
 train_labelIds = pd.read_csv('labels_to_ids.csv')
 
@@ -84,7 +84,7 @@ class BaseModels:
             return adaBoost_oneHot_predict, adaBoost_predictproba
         else:
             pickle_out = open(file_name, 'wb')
-            pickle.dump(lr_model_proba, pickle_out)
+            pickle.dump(adaBoost_model_proba, pickle_out)
             pickle_out.close()
             #return adaBoost_model_proba
     
@@ -103,7 +103,7 @@ class BaseModels:
             return rf_oneHot_predict, rf_predictproba
         else:
             pickle_out = open(file_name, 'wb')
-            pickle.dump(lr_model_proba, pickle_out)
+            pickle.dump(rf_model_proba, pickle_out)
             pickle_out.close()
             #return rf_model_proba
         
@@ -163,8 +163,8 @@ class Metamodel:
         return model_xg 
     
     def XGBoost_predict(self, concatenated_data, file_name):
-        self.concatenated_data = concatenated_data
-        self.file_name = file_name
+         self.concatenated_data = concatenated_data
+         self.file_name = file_name
          meta_testing_data =  xgboost.DMatrix(np.concatenate(( lr_prediction, ab_prediction, rf_prediction), axis=1))
          params = {'max_depth':3, 'eta':0.01,'silent':1,  'num_class':4,'objective':'multi:softmax' } 
          dataset = xgboost.DMatrix(concatenated_data, labels )
@@ -183,19 +183,19 @@ predectionLabelRf_1, predectionProbaRf_1 = layer_1A.Randomforest(features = trai
 predectionLabelRf_2, predectionProbaRf_2 = layer_1A.Randomforest(features = train_2, labels = trainLabel_2, test_features = test_2)
 predectionLabelRf_3, predectionProbaRf_3 = layer_1A.Randomforest(features = train_3, labels = trainLabel_3, test_features = test_3)
 
-layer_1A.Randomforest(features = train_features_pandas, labels = train_labels, test_features = None, file_name = 'randomforest_b1.pickle')
+layer_1A.Randomforest(features = train_features, labels = train_labels, test_features = None, file_name = 'D:/Randomforest/figs/randomforest_b1.pickle')
 
 predectionLabelab_1, predectionProbaab_1 = layer_1A.ada_boost(features = train_1, labels = trainLabel_1, test_features = test_1)
 predectionLabelab_2, predectionProbaab_2 = layer_1A.ada_boost(features = train_2, labels = trainLabel_2, test_features = test_2)
 predectionLabelab_3, predectionProbaab_3 = layer_1A.ada_boost(features = train_3, labels = trainLabel_3, test_features = test_3)
 
-layer_1A.ada_boost(features = train_features_pandas, labels = train_labels, test_features = None, file_name = 'abaBoost_b2.pickle')
+layer_1A.ada_boost(features = train_features, labels = train_labels, test_features = None, file_name = 'abaBoost_b2.pickle')
 
 predectionLabelLr_1, predectionProbaLr_1 = layer_1A.logistic_regression(features = train_1, labels = trainLabel_1, test_features = test_1)
 predectionLabelLr_2, predectionProbaLr_2 = layer_1A.logistic_regression(features = train_2, labels = trainLabel_2, test_features = test_2)
 predectionLabelLr_3, predectionProbaLr_3 = layer_1A.logistic_regression(features = train_3, labels = trainLabel_3, test_features = test_3)
 
-layer_1A.logistic_regression(features = train_features_pandas, labels = train, test_features = None, file_name = 'LogisticRegression_b3')
+layer_1A.logistic_regression(features = train_features, labels = train, test_features = None, file_name = 'LogisticRegression_b3')
 
 rf_dat_1 = metaTrainingData.meta_training_data(predectionProbaRf_1, predectionProbaRf_2, predectionProbaRf_3)
 rf_dat_2 = metaTrainingData.meta_training_data(predectionProbaab_1, predectionProbaab_2, predectionProbaab_3)

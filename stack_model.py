@@ -150,20 +150,29 @@ class Metamodel:
     def __init__(self):
         pass       
                 
-    def XGBoost_predictProba(self, concatenated_data, label):  
+    def XGBoost_predictProba(self, concatenated_data, label, file_name):  
         self.concatenated_data = concatenated_data
         self.label = label
+        self.file_name = file_name 
         params = {'max_depth':3, 'eta':0.01,'silent':1,  'num_class':4,'objective':'multi:softprob' } 
         meta_training_data_data =  xgboost.DMatrix(concatenated_data, label)
-        model_xg = xgboost.train(params, meta_training_data_data, num_boost_round=100)           
+        model_xg = xgboost.train(params, meta_training_data_data, num_boost_round=100)
+        pickle_out = open(file_name, 'wb')
+        pickle.dump(lr_model_proba, pickle_out)
+        pickle_out.close()
         return model_xg 
     
-    def XGBoost_predict(self, concatenated_data):
+    def XGBoost_predict(self, concatenated_data, file_name):
+        self.concatenated_data = concatenated_data
+        self.file_name = file_name
          meta_testing_data =  xgboost.DMatrix(np.concatenate(( lr_prediction, ab_prediction, rf_prediction), axis=1))
          params = {'max_depth':3, 'eta':0.01,'silent':1,  'num_class':4,'objective':'multi:softmax' } 
          dataset = xgboost.DMatrix(concatenated_data, labels )
          model_xg = xgboost.train(params, dataset, num_boost_round=100)
-         xg_train_one_hot = model_xg.predict(dataset)
+         pickle_out = open(file_name, 'wb')
+         pickle.dump(lr_model_proba, pickle_out)
+         pickle_out.close()
+         
          return model_xg
 
 layer_1A = BaseModels()
@@ -194,4 +203,4 @@ rf_dat_3 = metaTrainingData.meta_training_data(predectionLabelLr_1, predectionLa
 
 con_data = metaTrainingData.Concatenate_testData(rf_dat_1, rf_dat_2, rf_dat_3)
 
-model_xg = meta_xg.XGBoost_predictProba(con_data, train_labelIds)
+model_xg = meta_xg.XGBoost_predict(con_data, train_labelIds, file_name = 'metaclassifier.dat')

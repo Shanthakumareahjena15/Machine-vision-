@@ -52,3 +52,4 @@ detect_video.py:
 * [Another Yolov3 TensorFlow 2](https://github.com/heartkilla/yolo-v3)
 * [Yolo v3 official paper](https://arxiv.org/abs/1804.02767)
 * [A Tensorflow Slim implementation](https://github.com/mystic123/tensorflow-yolo-v3)
+* [The AI Guy](https://github.com/theAIGuysCode)

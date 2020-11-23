@@ -10,6 +10,12 @@ from yolov3_tf2.dataset import transform_images
 from yolov3_tf2.utils import draw_outputs
 import numpy as np
 
+#load saved pre trained models 
+flags.DEFINE_string('base_model_1', 'randomforest_b1.pickle', 'path to classes file')
+flags.DEFINE_string('base_model_2', 'abaBoost_b2.pickle', 'path to classes file')
+flags.DEFINE_string('base_model_3', 'LogisticRegression_b3', 'path to classes file')
+flags.DEFINE_string('meta_model', 'metaclassifier.dat', 'path to classes file')
+
 flags.DEFINE_string('classes', './data/labels/obj_fish.names', 'path to classes file')
 flags.DEFINE_string('weights', './weights/yolov3.tf',
                     'path to weights file')

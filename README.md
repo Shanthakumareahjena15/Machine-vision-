@@ -25,6 +25,6 @@ We used two public and one custom dataset. The two public datasets are QUT FISH 
 
 # Architecture of the framework 
 <figure>
-<img src="img/arch.JPG" alt="drawing">
-<figcaption> Hierarchical annotation of the dataset</figcaption>
+<img src="img/class_pro.JPG" alt="drawing">
+<figcaption>Architecture of the framework </figcaption>
 </figure>

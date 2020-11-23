@@ -10,3 +10,4 @@ We used two public and one custom dataset. The two public datasets are QUT FISH 
 
 
 ![](https://github.com/ShanthaKumarR/model_stacking/blob/master/img/steinbutt.jpg)
+![](https://github.com/ShanthaKumarR/model_stacking/blob/master/img/kliesche.jpg)

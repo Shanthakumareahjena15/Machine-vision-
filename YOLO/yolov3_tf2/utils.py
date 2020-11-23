@@ -4,7 +4,7 @@ import tensorflow as tf
 import cv2
 from seaborn import color_palette
 from PIL import Image, ImageDraw, ImageFont
-from yolov3_tf2 import load_data
+
 YOLOV3_LAYER_LIST = [
     'yolo_darknet',
     'yolo_conv_0',
@@ -104,8 +104,6 @@ def broadcast_iou(box_1, box_2):
 
 
 def draw_outputs(img, outputs, class_names):
-    stack_predections = []
-    calculated_length = [0]
     colors = ((np.array(color_palette("hls", 80)) * 255)).astype(np.uint8)
     boxes, objectness, classes, nums = outputs
     boxes, objectness, classes, nums = boxes[0], objectness[0], classes[0], nums[0]
@@ -145,15 +143,14 @@ def draw_outputs(img, outputs, class_names):
                                   font=font)
             
             
-            temp = load_data.validation(img = cropped_img)
-            stack_predections.append(temp)
+
            
            
     rgb_img = img.convert('RGB')
     img_np = np.asarray(rgb_img)
     img = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
 
-    return img, stack_predections, calculated_length
+    return img
 
 
 def draw_labels(x, y, class_names):

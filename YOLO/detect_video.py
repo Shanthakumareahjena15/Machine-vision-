@@ -10,6 +10,16 @@ from yolov3_tf2.dataset import transform_images
 from yolov3_tf2.utils import draw_outputs
 import numpy as np
 
+
+#laod VGG16 model
+from keras.applications.vgg16 import VGG16
+from keras.models import Model
+
+pre_trained_model = VGG16(input_shape = (224, 224, 3), include_top = False, weights = 'imagenet')
+FC_layer_model= Model(inputs = pre_trained_model.input, outputs = pre_trained_model.get_layer('block5_pool').output)
+
+
+
 #load saved pre trained models 
 flags.DEFINE_string('base_model_1', 'randomforest_b1.pickle', 'path to classes file')
 flags.DEFINE_string('base_model_2', 'abaBoost_b2.pickle', 'path to classes file')
@@ -108,6 +118,12 @@ def main(_argv):
             steinbutt_count.append(0)
         fps  = ( fps + (1./(time.time()-t1)) ) / 2
         img= draw_outputs(img[344:513, 766:1042], (boxes, scores, classes, nums), class_names)
+        img_stack_input = img
+        img_stack_input = cv2.resize(img_stack_input, (224, 224))
+        img_stack_input = cv2.cvtColor(img_stack_input, cv2.COLOR_RGB2BGR)
+        img_stack_input = np.expand_dims(img_stack_input, axis=0)
+        FC_output = FC_layer_model.predict(img_stack_input)
+        FC_output = FC_output.flatten()
         
       
         img_raw[344:513, 766:1042] = img 

@@ -103,7 +103,7 @@ def main(_argv):
         fps  = ( fps + (1./(time.time()-t1)) ) / 2
         img, stack_predections, length = draw_outputs(img[344:513, 766:1042], (boxes, scores, classes, nums), class_names)
         
-        #img_raw[355: 576, 748: 1220] = img #cod,cod_trial
+      
         img_raw[344:513, 766:1042] = img 
         cv2.putText(img_raw, "FPS: {:.2f}".format(fps), (0, 60),
                           cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)

@@ -8,6 +8,9 @@ To study the commercial fish stock, marine data is collected by preforming biolo
 
 We used two public and one custom dataset. The two public datasets are QUT FISH and Open image dataset. The examples in the public datasets are labelled with single label Fish and acts as the level one label of the semantic hierarchy. The custom dataset is captured in the laboratory at "Thünen-Institute (OF)" and in the fishery research vessel "Solea". Therefore, the dataset is named "Thünen dataset". The thünen dataset contains level one and level two label of the semantic hierarchy for each example in the dataset 
 
-
-![Torbot](img/steinbutt.jpg )
-![Dab](img/kliesche.jpg)
+<p float="left">
+<img src="img/measuring_board.jpg" alt="drawing" width="300" height="100" />
+<img src="img/her.jpg" alt="drawing" width="300" height="100" />
+<img src="img/kliesche.jpg" alt="drawing" width="300" height="100" />
+<img src="img/steinbutt.jpg" alt="drawing" width="300" height="200" />
+  </p>

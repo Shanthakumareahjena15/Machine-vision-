@@ -1,3 +1,6 @@
+## Important Points to rember 
+The pixel location of the measuring board has to  be computed in prior and mention  it in the detect.py and detect_video.py  
+
 
 
 ## Command Line Args Reference

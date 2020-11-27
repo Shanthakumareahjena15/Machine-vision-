@@ -23,7 +23,7 @@ FC_layer_model= Model(inputs = pre_trained_model.input, outputs = pre_trained_mo
 #load saved pre trained models 
 flags.DEFINE_string('base_model_1', 'randomforest_b1.pickle', 'path to classes file')
 flags.DEFINE_string('base_model_2', 'abaBoost_b2.pickle', 'path to classes file')
-flags.DEFINE_string('base_model_3', 'LogisticRegression_b3', 'path to classes file')
+flags.DEFINE_string('base_model_3', 'LogisticRegression_b3.pickle', 'path to classes file')
 flags.DEFINE_string('meta_model', 'metaclassifier.dat', 'path to classes file')
 
 flags.DEFINE_string('classes', './data/labels/obj_fish.names', 'path to classes file')
@@ -124,6 +124,14 @@ def main(_argv):
         img_stack_input = np.expand_dims(img_stack_input, axis=0)
         FC_output = FC_layer_model.predict(img_stack_input)
         FC_output = FC_output.flatten()
+        rf_pred = flage.base_model_1.predict_proba(FC_output)
+        adb_pred = flage.base_model_2.predict_proba(FC_output)
+        lr_pred = flag.base_model_3.predict_proba(FC_output)
+        meta_testing_data = np.concatenate((rf_pred, abd_pred, lr_pred), axis=1)
+        meta_testing_data = pd.DataFrame(meta_testing_data)
+        final_pred = flage.meta_model.predict(meta_testing_data)
+        final_pred = final_pred.tolist()
+        final_pred = int(final_pred[0])
         
       
         img_raw[344:513, 766:1042] = img 

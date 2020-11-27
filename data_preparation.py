@@ -26,7 +26,7 @@ class data_preparation:
                 img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)            
                 image.append(img)
                 lable.append(folder_name)   
-        return image, lable 
+        return np.array(image), np.array(lable) 
         
     def creat_label(self, label):
           

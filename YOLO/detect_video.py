@@ -118,20 +118,6 @@ def main(_argv):
             steinbutt_count.append(0)
         fps  = ( fps + (1./(time.time()-t1)) ) / 2
         img= draw_outputs(img[344:513, 766:1042], (boxes, scores, classes, nums), class_names)
-        img_stack_input = img
-        img_stack_input = cv2.resize(img_stack_input, (224, 224))
-        img_stack_input = cv2.cvtColor(img_stack_input, cv2.COLOR_RGB2BGR)
-        img_stack_input = np.expand_dims(img_stack_input, axis=0)
-        FC_output = FC_layer_model.predict(img_stack_input)
-        FC_output = FC_output.flatten()
-        rf_pred = flage.base_model_1.predict_proba(FC_output)
-        adb_pred = flage.base_model_2.predict_proba(FC_output)
-        lr_pred = flag.base_model_3.predict_proba(FC_output)
-        meta_testing_data = np.concatenate((rf_pred, abd_pred, lr_pred), axis=1)
-        meta_testing_data = pd.DataFrame(meta_testing_data)
-        final_pred = flage.meta_model.predict(meta_testing_data)
-        final_pred = final_pred.tolist()
-        final_pred = int(final_pred[0])
         
       
         img_raw[344:513, 766:1042] = img 
@@ -139,13 +125,27 @@ def main(_argv):
                           cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)
         full_score.append(scores)
         boxes, scores, classes, nums = boxes[0], scores[0], classes[0], nums[0]
-        if scores.any():            
+        if scores.any():
+            img_stack_input = img
+            img_stack_input = cv2.resize(img_stack_input, (224, 224))
+            img_stack_input = cv2.cvtColor(img_stack_input, cv2.COLOR_RGB2BGR)
+            img_stack_input = np.expand_dims(img_stack_input, axis=0)
+            FC_output = FC_layer_model.predict(img_stack_input)
+            FC_output = FC_output.flatten()
+            rf_pred = flage.base_model_1.predict_proba(FC_output)
+            adb_pred = flage.base_model_2.predict_proba(FC_output)
+            lr_pred = flag.base_model_3.predict_proba(FC_output)
+            meta_testing_data = np.concatenate((rf_pred, abd_pred, lr_pred), axis=1)
+            meta_testing_data = pd.DataFrame(meta_testing_data)
+            final_pred = flage.meta_model.predict(meta_testing_data)
+            final_pred = final_pred.tolist()
+            final_pred = int(final_pred[0])
             for i in range(nums):
                 if (scores[i]*100) > 75:    
                     cv2.putText(img_raw, 'Computed_length = {}'.format((length[-1]-4)), (0, 100), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 3)
                     fine_class.append(stack_predections[0])             
                     #dummy_scores.append(scores[0])
-                    if stack_predections[0] ==0:
+                    if final_pred == 0:
                         cv2.putText(img_raw, 'Detected Fish = Dorsch', (0, 100), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 3)
                         
                         if np.all(np.array(cod_count[-5:]) == 0):
@@ -153,21 +153,21 @@ def main(_argv):
                           cod_count.append(dorsch_counter)
                         cod_count.append(dorsch_counter)
                     
-                    if stack_predections[0] ==1:
+                    if final_pred ==1:
                         cv2.putText(img_raw, 'Detected Fish = Herring', (0, 100), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 3)
                         if np.all(np.array(herring_count[-5:]) == 0):
                           herring_counter+=1
                           herring_count.append(herring_counter)
                         herring_count.append(herring_counter)
                     
-                    if stack_predections[0] ==2:
+                    if final_pre ==2:
                         cv2.putText(img_raw, 'Detected Fish = Kliesche', (0, 100), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 3)
                         if np.all(np.array(kliesche_count[-5:]) == 0):
                           kliesche_counter+=1
                           kliesche_count.append(kliesche_counter)
                         kliesche_count.append(kliesche_counter)
 
-                    if stack_predections[0] ==3:
+                    if final_pred ==3:
                         cv2.putText(img_raw, 'Detected Fish = Steinbutt', (0, 100), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 3)
                         if np.all(np.array(steinbutt_count[-5:]) == 0):
                           steinbutt_counter+=1
@@ -188,8 +188,7 @@ def main(_argv):
                     kliesche_count.append(0)
                     herring_count.append(0)
                     steinbutt_count.append(0)
-        print(kliesche_counter)
-        #print(stack_predections)
+
         cv2.putText(img_raw, 'Total no of fish = '+str(counta), (0,130), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1,  (0,0,255), 3)
         cv2.putText(img_raw, 'Total no of Dorsch = '+str(dorsch_counter), (0,160), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1,  (0,0,255), 3)
         cv2.putText(img_raw, 'Total no of Kliesche = '+str(kliesche_counter), (0,180), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1,  (0,0,255), 3)
@@ -210,12 +209,4 @@ if __name__ == '__main__':
     except SystemExit:
         pass
 
-
-
-# new_cod_count = 0
-# j = 0
-
-# for i in cod_count:
-    # if i != 0:
-        # print(i)
 

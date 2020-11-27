@@ -117,7 +117,7 @@ def main(_argv):
             kliesche_count.append(0)
             steinbutt_count.append(0)
         fps  = ( fps + (1./(time.time()-t1)) ) / 2
-        img= draw_outputs(img[344:513, 766:1042], (boxes, scores, classes, nums), class_names)
+        img, length = draw_outputs(img[344:513, 766:1042], (boxes, scores, classes, nums), class_names)
         
       
         img_raw[344:513, 766:1042] = img 

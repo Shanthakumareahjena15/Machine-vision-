@@ -131,7 +131,7 @@ def draw_outputs(img, outputs, class_names):
                 x2y2[0], x2y2[1] = x2y2[0] - t, x2y2[1] - t
                 draw.rectangle([x1y1[0], x1y1[1], x2y2[0], x2y2[1]], outline=tuple(color))
                 length = (x2y2[0]-x1y1[0])/7.85
-                calculated_length.append(length)
+                #calculated_length.append(length)
                 
             confidence = '{:.2f}%'.format(objectness[i]*100)
             text = '{} {}'.format(class_names[int(classes[i])], confidence)
@@ -150,7 +150,7 @@ def draw_outputs(img, outputs, class_names):
     img_np = np.asarray(rgb_img)
     img = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
 
-    return img
+    return img, length
 
 
 def draw_labels(x, y, class_names):

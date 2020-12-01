@@ -28,3 +28,10 @@ We used two public and one custom dataset. The two public datasets are QUT FISH 
 <img src="img/class_pro.JPG" alt="drawing">
 <figcaption>Architecture of the framework </figcaption>
 </figure>
+# Folder structure 
+<figure>
+<img src="img/class_pro.JPG" alt="drawing">
+<figcaption>Architecture of the framework </figcaption>
+</figure>
+# Gudeline to use the source code
+1. 

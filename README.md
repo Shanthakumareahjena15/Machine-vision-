@@ -39,4 +39,9 @@ We used two public and one custom dataset. The two public datasets are QUT FISH 
 1. Make sure the structure of the folders are correct as shown above 
 2. Run the K-Fold.py script. It will generate set of csv files.
 3. Run the stack_model.py. it will save the trained base and the meta model in the foler YOLO
-4. Train the yolov3 netwotk and place the weigths inside the folder 
+4. Train the yolov3 netwotk and place the weigths inside YOLO/weights the folder 
+5. place the testing video in the YOLO/data/videos folder
+6. Run the detect_video.py file.
+7. test video will be saved in the YOLO folder under the name output.avi
+
+Note: detect_video.py scrtip takes multiple argument and the details is given in the readme file which is place inside YOLO folder 

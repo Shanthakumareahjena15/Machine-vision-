@@ -1,8 +1,8 @@
 import pandas as pd
 from sklearn.model_selection import StratifiedKFold
 import numpy as np
-from length_measurement import data_preparation
-
+from data_preparation import data_preparation
+import os
 
 skf = StratifiedKFold(n_splits=3,  random_state=None, shuffle=True)
 
@@ -89,10 +89,12 @@ class lable:
         
         return label_index_1, label_index_2, label_index_3
 
-obj_1= kFold( 'D:\Randomforest', '/Validation-Example1/*', 'block5_pool', 'tarining.csv',  'training_label.csv')
+obj_1= kFold( os.getcwd(), '/training_dataset/*', 'block5_pool', 'tarining.csv',  'training_label.csv')
+
 training_image, training_label  = obj_1.image_to_array()
 training_feature = obj_1.VGG16_trained_model(training_image.shape[0])
 labels_to_ids, ids_to_labels = obj_1.creat_label(training_label)
+
 train_index_1, test_index_1, train_index_2, test_index_2, train_index_3, test_index_3 = obj_1.index_sorting(training_feature, labels_to_ids)
 
 training_feature_1, training_feature_2, training_feature_3 = obj_1.data_seperation(train_index_1, train_index_2, train_index_3, training_feature)
@@ -109,6 +111,7 @@ test_label_1, test_label_2, test_label_3 = label_creation.label(training_label, 
 
 pd.DataFrame(training_label).to_csv('training_label.csv', index= False)
 pd.DataFrame(training_feature).to_csv('Training_feature.csv', index= False)
+pd.DataFrame(labels_to_ids).to_csv('training_label_ids.csv', index= False)
 
 pd.DataFrame(training_feature_1).to_csv('training_feature_1.csv', index= False)
 pd.DataFrame(training_feature_2).to_csv('training_feature_2.csv', index= False)
@@ -139,10 +142,8 @@ pd.DataFrame(test_label_id1).to_csv('test_label_id1.csv', index= False)
 pd.DataFrame(test_label_id2).to_csv('test_label_id2.csv', index= False)
 pd.DataFrame(test_label_id3).to_csv('test_label_id3.csv', index= False)
 
-testIndex_1 = pd.read_csv('test_index1.csv')
-testIndex_2 = pd.read_csv('test_index2.csv')
-testIndex_3 = pd.read_csv('test_index3.csv')
 
 pd.DataFrame(test_index_1).to_csv('test_index1.csv', index= False)
 pd.DataFrame(test_index_2).to_csv('test_index2.csv', index= False)
 pd.DataFrame(test_index_3).to_csv('test_index3.csv', index= False)
+

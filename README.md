@@ -36,4 +36,7 @@ We used two public and one custom dataset. The two public datasets are QUT FISH 
 </figure>
 
 # Gudeline to use the source code
-1. 
+1. Make sure the structure of the folders are correct as shown above 
+2. Run the K-Fold.py script. It will generate set of csv files.
+3. Run the stack_model.py. it will save the trained base and the meta model in the foler YOLO
+4. Train the yolov3 netwotk and place the weigths inside the folder 

@@ -11,7 +11,7 @@ import os
 
 train_features = pd.read_csv('training_feature.csv')
 train_labels = pd.read_csv('training_label.csv')
-train_labelIds = pd.read_csv('labels_to_ids.csv')
+train_labelIds = pd.read_csv('training_label_ids.csv')
 
 train_1 = pd.read_csv('training_feature_1.csv')
 train_2 = pd.read_csv('training_feature_2.csv')
@@ -122,7 +122,7 @@ class MetaTraining_data:
         self.test_pred_1 = test_pred_1
         self.test_pred_2 = test_pred_2
         self.test_pred_3 = test_pred_3
-        prediction = np.zeros((434, 4))
+        prediction = np.zeros((1117, 4))
         for i, j in zip (test_pred_1, np.array(self.test_label_index1)):
            prediction[j] = i
            
@@ -195,7 +195,7 @@ predectionLabelLr_1, predectionProbaLr_1 = layer_1A.logistic_regression(features
 predectionLabelLr_2, predectionProbaLr_2 = layer_1A.logistic_regression(features = train_2, labels = trainLabel_2, test_features = test_2)
 predectionLabelLr_3, predectionProbaLr_3 = layer_1A.logistic_regression(features = train_3, labels = trainLabel_3, test_features = test_3)
 
-layer_1A.logistic_regression(features = train_features, labels = train_labels, test_features = None, file_name = os.getcwd() + '/YOLO/LogisticRegression_b3')
+layer_1A.logistic_regression(features = train_features, labels = train_labels, test_features = None, file_name = os.getcwd() + '/YOLO/LogisticRegression_b3.pickle')
 
 rf_dat_1 = metaTrainingData.meta_training_data(predectionProbaRf_1, predectionProbaRf_2, predectionProbaRf_3)
 rf_dat_2 = metaTrainingData.meta_training_data(predectionProbaab_1, predectionProbaab_2, predectionProbaab_3)
@@ -203,4 +203,4 @@ rf_dat_3 = metaTrainingData.meta_training_data(predectionLabelLr_1, predectionLa
 
 con_data = metaTrainingData.Concatenate_testData(rf_dat_1, rf_dat_2, rf_dat_3)
 
-model_xg = meta_xg.XGBoost_predict(con_data, train_labelIds, file_name = os.getcwd() + '/results/metaclassifier.dat')
+model_xg = meta_xg.XGBoost_predict(con_data, train_labelIds, file_name = os.getcwd() + '/YOLO/metaclassifier.dat')
